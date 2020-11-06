@@ -21,17 +21,27 @@ df=pd.json_normalize(dat['loppuselvitys'],['loppuselvitys_answers','value'],meta
 df2=loppu
 
 
+
 #%%
 df2['unique']=df2[['haku_id','organization_name','project_name']].apply(lambda x: str(x['haku_id'])+str(x['organization_name'])+str(x['project_name']),axis=1)
 df['unique']=df[['haku_id','organization_name','project_name']].apply(lambda x: str(x['haku_id'])+str(x['organization_name'])+str(x['project_name']),axis=1)
+df2=df2.drop_duplicates('unique')
+df=df.drop_duplicates(['unique','key'])
 #%%
-for key in df['key']:
-    df2[key]=df.loc[df['key']==key,'value']
+uniqueKeys=df['key'].unique()
+ddf2=df2.copy()
+ddf2=ddf2.set_index('unique')
+ddf=df[['key','value','unique']]
+ddf=ddf.set_index('unique')
+for (index,key) in enumerate(df['key'].unique()):
+    if((index%100)==0):
+        print(index)
+    ddf_=ddf[ddf['key']==key]
+    ddf_=ddf_.rename(columns={'value':key})
+    ddf_=ddf_[key]
+    ddf3=ddf2.join(ddf_,on='unique',how="left",lsuffix="l",rsuffix="r")
+    ddf2[key]=ddf3[key]
     
 #%%
-ddf=df[df['key']=='language']
-ddf.loc[:,'haku_id']=ddf['haku_id'].astype('int64')
-print(ddf.dtypes)
-print(df2.dtypes)
-df2types=df2.dtypes
-ddf2=df2.join(ddf,on=['unique'],how="left",lsuffix="df2_",rsuffix="ddf_")
+ddf2.drop('loppuselvitys_answers')
+ddf2.to_excel('parsittu.xlsx')
