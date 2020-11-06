@@ -41,7 +41,9 @@ for (index,key) in enumerate(df['key'].unique()):
     ddf_=ddf_[key]
     ddf3=ddf2.join(ddf_,on='unique',how="left",lsuffix="l",rsuffix="r")
     ddf2[key]=ddf3[key]
-    
+
+ddf2=ddf2.drop('loppuselvitys_answers',axis=1)
 #%%
-ddf2.drop('loppuselvitys_answers')
 ddf2.to_excel('parsittu.xlsx')
+ddf2.to_csv('alkuparsinta.csv')
+#%%
