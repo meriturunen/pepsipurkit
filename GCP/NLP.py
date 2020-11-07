@@ -7,6 +7,7 @@ Created on Sat Nov  7 11:36:19 2020
 from Translate import Kaantaja
 from google.cloud import language_v1
 import pandas as pd
+import numpy as np
 import proto
 import json
 
@@ -31,8 +32,13 @@ class Sentiment():
 #        print(resp)
         sentences=resp["sentences"]
         df=pd.json_normalize(sentences)
-        tulos=df[['sentiment.magnitude','sentiment.score']].describe()
-        return tulos.T
+        try:
+            tulos=df[['sentiment.score']].describe()
+        except:
+            df=pd.DataFrame({'sentiment.score':np.nan},index=[0])
+            tulos=df[['sentiment.score']].describe()
+        finally:
+            return tulos.T
  
 #%%  
 text_content=r"Olen suomenkielistä kapulatekstiä. Hervannan keittiö on paras."     
