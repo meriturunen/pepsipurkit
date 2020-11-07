@@ -79,6 +79,8 @@ for i in range(0, len(ryhma)):
 #%%
 sentg=ryhmitelty.groupby(['unique'])
 sent_df=pd.DataFrame(index=sentg.first().index)
+
+#%%
 sent_df.loc[:,'min']=sentg.min()['min']
 sent_df.loc[:,'max']=sentg.max()['max']
 sent_df.loc[:,'std']=sentg.mean()['std']
@@ -88,4 +90,25 @@ df2.loc[:,['min','max','std','mean']]=sent_df[['min','max','std','mean']]
 #%%
 df3 = df2.reset_index(drop=False, inplace=False)
 df3 = df3.rename(columns={'index': 'unique','0':'ei-tuotos-tyyppia'})
+#%% 
+
+df3['toimintamalli'] = pd.to_numeric(df3['toimintamalli'])
+df3['raportti'] = pd.to_numeric(df3['raportti'])
+df3['muu-tuotos'] = pd.to_numeric(df3['muu-tuotos'])
+df3['verkkosivut'] = pd.to_numeric(df3['verkkosivut'])
+df3['selvitys'] = pd.to_numeric(df3['selvitys'])
+df3['ohjelma'] = pd.to_numeric(df3['ohjelma'])
+df3['kasikirja'] = pd.to_numeric(df3['kasikirja'])
+df3['julkaisut'] = pd.to_numeric(df3['julkaisut'])
+df3['tutkimus'] = pd.to_numeric(df3['tutkimus'])
+df3['tapahtuma'] = pd.to_numeric(df3['tapahtuma'])
+df3['koulutus'] = pd.to_numeric(df3['koulutus'])
+df3['opiskelijaliikkuvuudet-lkm'] = pd.to_numeric(df3['opiskelijaliikkuvuudet-lkm'])
+df3['henkiloestoeliikkuvuudet-lkm'] = pd.to_numeric(df3['henkiloestoeliikkuvuudet-lkm'])
+
+#%%
+df3['sum'] = df3[['toimintamalli', 'raportti', 'muu-tuotos', 'verkkosivut', 'selvitys', 'ohjelma', 
+                                      'kasikirja', 'julkaisut', 'tutkimus', 'tapahtuma',
+                                      'koulutus', 'opiskelijaliikkuvuudet-lkm', 'henkiloestoeliikkuvuudet-lkm']].sum(axis=1)
 df3.to_csv('project_outcome_ryhmittely.csv')
+

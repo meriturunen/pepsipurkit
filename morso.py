@@ -23,7 +23,16 @@ df['radioButton-good-practices'].loc[(df['radioButton-good-practices'] == "ei")]
 df['radioButton-good-practices'].fillna(0, inplace=True)
 df['radioButton-good-practices'].loc[(df['radioButton-good-practices'] == "kyllae")] = 1
 
+df.fillna(0, inplace=True)
+
 #%%
+# input muuttujat
+X = np.array(pd.get_dummies(df[['summaamount', 'toimintamalli', 'raportti', 'muu-tuotos', 'verkkosivut',
+                                      'kasikirja', 'julkaisut', 'tutkimus', 'tapahtuma',
+                                      'koulutus', 'opiskelijaliikkuvuudet-lkm', 'henkiloestoeliikkuvuudet-lkm']]))
+             
+# output muuttuja
+y = np.array(pd.get_dummies(df[['radioButton-good-practices', 'mean']]))
 
 
 #%%
