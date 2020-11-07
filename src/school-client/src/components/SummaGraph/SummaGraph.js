@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from 'react';
 import {
-  ScatterChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,Scatter
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,Scatter
 } from 'recharts';
 
 export default class Example extends Component 
@@ -17,7 +17,7 @@ export default class Example extends Component
     return (
       <>
       {!this.state.isFetching &&(
-      <ScatterChart
+      <BarChart
         width={500}
         height={300}
         data={this.state.data}
@@ -26,20 +26,22 @@ export default class Example extends Component
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <YAxis dataKey="summaamount" />
-        <XAxis dataKey="SummienTodennakoisyys"/>
+        <YAxis/>
+        {//<XAxis dataKey="SummienTodennakoisyys"/>
+        }
         <Tooltip />
         <Legend />
-        <Scatter name="A school" data={this.state.data} fill="#8884d8" />
+        <Bar dataKey="sum" fill="#8884d8" />
+        <Bar dataKey="tulot" fill="#82ca9d" />
         {//<Bar dataKey="unique" fill="#82ca9d" />
         }
-      </ScatterChart>)}
+      </BarChart>)}
       </>
     );
   }
   componentDidMount(){
     this.setState({...this.state,isFetching:true})
-		fetch("http://localhost:5000/api/v1/summat")
+		fetch("http://localhost:5000/api/v1/summat/hist")
 		.then((response)=>{
 			return response.json();
 		})

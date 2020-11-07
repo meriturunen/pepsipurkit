@@ -33,6 +33,18 @@ def api_summat():
     return jsonify(dat.to_dict('records'))
 
 @cross_origin()
+@app.route('/api/v1/summat/hist', methods=['GET'])
+def api_summat_hist():
+    dat=pd.read_csv('../summat.csv')
+    cutted,bins=pd.cut(dat['summaamount'],5,labels=False,retbins=True)
+    dat['bin']=cutted
+    dat2=dat.groupby('bin')["summaamount"].agg(['sum','count'])
+    dat3=dat.groupby('bin')["tulotamount"].sum()
+    dat2['tulot']=dat3
+    dat2=dat2.sort_values(by='sum')
+    return jsonify(dat2.to_dict('records'))
+
+@cross_origin()
 @app.route('/api/v1/raaka', methods=['GET'])
 def api_raaka():
     dat=pd.read_csv('../alkuparsinta.csv')
