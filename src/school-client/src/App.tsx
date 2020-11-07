@@ -4,8 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import Fade from '@material-ui/core/Fade';
 
 import Colors from './utils/style/colors'
 import Home from './pages/home/Home'
@@ -15,11 +14,16 @@ import logo from './utils/style/schoollogo_new.png'
 
 const App: React.FC = () => {
   const classes = useStyles()
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
+      <AppBar position="static" className={classes.toolbar}>
+        <Toolbar>
           <img src={logo} className={classes.logo} alt='Logo' />
           <Typography variant="h6" className={classes.title}>
             S.C.H.O.O.L.
@@ -27,27 +31,45 @@ const App: React.FC = () => {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
+      <Fade in={checked}>
+        <div className={classes.fadeOutBlock}>
+          <img src={logo} className={classes.fadeOutLogo} alt='Logo' onClick={handleChange} />
+        </div>
+      </Fade>
       <Home />
     </div>
   )
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root : {
     flexGrow: 1,
   },
-  menuButton: {
+  menuButton : {
     marginRight: theme.spacing(2),
   },
-  title: {
+  title : {
     flexGrow: 1,
     paddingLeft: '35px',
   },
-  logo: {
+  logo : {
     width: '45px',
   },
   toolbar : {
-    background: Colors.primaryBackground,
+    background: Colors.headderBackground,
+    height: '10%',
+  },
+  fadeOutLogo : {
+    display: 'block',
+    width: '50%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  fadeOutBlock : {
+    position: 'absolute',
+    width: '100%',
+    heigth: '90%',
+    background: Colors.primaryBackgrounds
   }
 }));
 
