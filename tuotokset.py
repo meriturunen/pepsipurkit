@@ -95,15 +95,3 @@ df = pd.DataFrame(projects)
 
 df.to_excel('project_outcome.xlsx')
 df.to_csv('project_outcome.csv')
-
-#%%
-
-
-
-
-
-
-
-
-
-
