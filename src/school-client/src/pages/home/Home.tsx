@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SummaGraph from "../../components/SummaGraph/SummaGraph"
 import SchoolSearchBar from "../../components/school-search-bar/SchoolSearchBar";
 import Donitsi from "../../components/donitsi/Donitsi";
+import DataTaulukko from "../../components/data-taulukko/DataTaulukko"
 
 const Home: React.FC = () => {
   const classes = useStyles();
@@ -11,9 +12,6 @@ const Home: React.FC = () => {
   return (
     <div className={clsx("Home", classes.root)}>
       <table width="100%">
-        <tr>
-          <SchoolSearchBar />
-        </tr>
         <tr>
           <div
             style={{
@@ -23,6 +21,7 @@ const Home: React.FC = () => {
             }}
           >
             <Donitsi />
+            
           </div>
         </tr>
       </table>

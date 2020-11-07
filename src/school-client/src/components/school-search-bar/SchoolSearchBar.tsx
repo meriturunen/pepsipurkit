@@ -84,9 +84,11 @@ const TextArea = (): JSX.Element => {
       />
   );
 };
+interface SearchInterface{
+  clickHae: () => void;
+}
 
-
-const SchoolSearchBar: React.FC = () => {
+const SchoolSearchBar: React.FC<SearchInterface> = (searchProps: SearchInterface) => {
   const classes = useStyles();
   const [displayFormStatus, setDisplayFormStatus] = useState(false);
   const [formStatus, setFormStatus] = useState<IFormStatus>({
@@ -194,6 +196,7 @@ const SchoolSearchBar: React.FC = () => {
                     variant="contained"
                     disabled={isSubmitting}
                     className={classes.submitButton}
+                    onClick={searchProps.clickHae}
                   >
                     Hae
                   </Button>

@@ -9,10 +9,13 @@ import Fade from "@material-ui/core/Fade";
 import Colors from "./utils/style/colors";
 import Home from "./pages/home/Home";
 import logo from "./utils/style/schoollogo_new.png";
+import SchoolSearchBar from "./components/school-search-bar/SchoolSearchBar";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const App: React.FC = () => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);
+  const [searchResults, setSearchResults] = React.useState(false);
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -41,7 +44,21 @@ const App: React.FC = () => {
       </Fade>
       {!checked &&(
       <div className={classes.homeBlock}>
-        <Home />
+        <table width="100%">
+        <tr>
+          <SchoolSearchBar clickHae={()=>{console.log("kliketi click"); setSearchResults(true);}}/>
+        </tr>
+        {!searchResults && (
+          <tr>
+          <Home />
+          </tr>
+        )}
+         {searchResults && (
+          <tr>
+          <Dashboard />
+          </tr>
+        )}
+        </table>
       </div>
       )}
     </div>

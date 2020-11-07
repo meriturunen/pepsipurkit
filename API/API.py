@@ -64,6 +64,7 @@ def api_donitsi1():
 @app.route('/api/v1/alldata', methods=['GET'])
 def all_data():
     data=pd.read_csv('../master.csv')
+    data['mean']=data['mean'].fillna(0)
     data=data.fillna("")
     return jsonify(data.to_dict('records'))
 

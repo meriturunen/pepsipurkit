@@ -27,6 +27,8 @@ interface Data {
   projektityyppi: string;
   onnistuminen: number;
   projektinkoko: number;
+  rahasumtodnak: number;
+  tuotoksienlkm: number;
 }
 
 
@@ -72,10 +74,12 @@ interface HeadCell {
 
 const headCells: HeadCell[] = [
   { id: 'organisaatio', numeric: false, disablePadding: true, label: 'Organisaatio' },
-  { id: 'projektinimi', numeric: false, disablePadding: false, label: 'projektinimi' },
-  { id: 'projektityyppi', numeric: false, disablePadding: false, label: 'projektityyppi' },
-  { id: 'onnistuminen', numeric: true, disablePadding: false, label: 'onnistuminen' },
-  { id: 'projektinkoko', numeric: true, disablePadding: false, label: 'projektinkoko' },
+  { id: 'projektinimi', numeric: false, disablePadding: false, label: 'Projektinimi' },
+  { id: 'projektityyppi', numeric: false, disablePadding: false, label: 'Projektityyppi' },
+  { id: 'tuotoksienlkm', numeric: false, disablePadding: false, label: 'Tuotoksia (kpl)' },
+  { id: 'onnistuminen', numeric: true, disablePadding: false, label: 'Onnistuminen' },
+  { id: 'projektinkoko', numeric: true, disablePadding: false, label: 'Projektinkoko' },
+  { id: 'rahasumtodnak', numeric: true, disablePadding: false, label: 'Poikkeavuus' },
 ];
 
 interface EnhancedTableProps {
@@ -97,20 +101,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
+            className={classes.header}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -130,7 +127,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     </TableHead>
   );
 }
-
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -173,7 +169,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Nutrition
+          Hakemukset
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -183,11 +179,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+            <></>
       )}
     </Toolbar>
   );
@@ -216,6 +208,9 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
+    header:{
+        paddingLeft:"5px",
+    },
   }),
 );
 interface TableFilter{
@@ -241,11 +236,16 @@ export default function EnhancedTable(props: TableFilter) {
         for(var dat in data){
             newRows.push({
             id:data[dat]["Unnamed: 0"],
+            projektinimi:data[dat]["project_name"],
+            organisaatio:data[dat]["organization_name"],
             projektinkoko:data[dat]["summaamount"],
-            onnistuminen:data[dat]["mean"]
+            onnistuminen:data[dat]["mean"],
+            projektityyppi:data[dat]["osa_alue_nimi"],
+            rahasumtodnak:data[dat]["SummienTodennakoisyys"],
+            tuotoksienlkm:data[dat]["sum"]
             }as Data)
         }
-        console.log(newRows)
+        //console.log(newRows)
        // console.log(data)
         setRows(newRows);
         }
@@ -340,17 +340,13 @@ export default function EnhancedTable(props: TableFilter) {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
                       <TableCell align="right">{row.organisaatio}</TableCell>
                       <TableCell align="right">{row.projektinimi}</TableCell>
                       <TableCell align="right">{row.projektityyppi}</TableCell>
-                      <TableCell align="right">{row.onnistuminen}</TableCell>
-                      <TableCell align="right">{row.projektinkoko}</TableCell>
+                      <TableCell align="right">{row.tuotoksienlkm}</TableCell>
+                      <TableCell align="right">{row.onnistuminen.toFixed(2)}</TableCell>
+                      <TableCell align="right">{row.projektinkoko.toFixed(0)}</TableCell>
+                      <TableCell align="right">{row.rahasumtodnak.toFixed(0)}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -372,10 +368,6 @@ export default function EnhancedTable(props: TableFilter) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </div>
   );
 }
