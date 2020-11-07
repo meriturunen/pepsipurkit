@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-
+import SummaGraph from "../../components/SummaGraph/SummaGraph"
 import SchoolSearchBar from "../../components/school-search-bar/SchoolSearchBar";
 import Donitsi from "../../components/donitsi/Donitsi";
 
@@ -22,7 +22,7 @@ const Home: React.FC = () => {
               alignItems: "center",
             }}
           >
-            <Donitsi />
+            <SummaGraph />
           </div>
         </tr>
       </table>

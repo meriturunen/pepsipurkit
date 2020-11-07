@@ -1,42 +1,51 @@
-import React, { PureComponent } from 'react';
+import React, { Component, PureComponent } from 'react';
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ScatterChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,Scatter
 } from 'recharts';
 
-var _data;
-export default class Example extends PureComponent {
+export default class Example extends Component 
+{
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFetching: false,
+      data: []
+    };
+  }
   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/30763kr7/';
   render() {
     return (
       <>
-      {_data &&(
-      <BarChart
+      {!this.state.isFetching &&(
+      <ScatterChart
         width={500}
         height={300}
-        data={_data}
+        data={this.state.data}
         margin={{
           top: 5, right: 30, left: 20, bottom: 5,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis dataKey="summaamount" />
+        <XAxis dataKey="SummienTodennakoisyys"/>
         <Tooltip />
         <Legend />
-        <Bar dataKey="SummienTodennakoisyys" fill="#8884d8" />
-        <Bar dataKey="unique" fill="#82ca9d" />
-      </BarChart>)}
+        <Scatter name="A school" data={this.state.data} fill="#8884d8" />
+        {//<Bar dataKey="unique" fill="#82ca9d" />
+        }
+      </ScatterChart>)}
       </>
     );
   }
   componentDidMount(){
+    this.setState({...this.state,isFetching:true})
 		fetch("http://localhost:5000/api/v1/summat")
-		.then(function(response) {
+		.then((response)=>{
 			return response.json();
 		})
-		.then(function(data) {
-      _data=data;
-      console.log(_data)
+		.then((data)=> {
+      console.log(data)
+      this.setState({data:data,isFetching:false})
 			}
 		);
 	}
