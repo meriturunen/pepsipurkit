@@ -35,6 +35,6 @@ class Sentiment():
         return tulos.T
  
 #%%  
-#text_content=r"Olen suomenkielistä kapulatekstiä. Hervannan keittiö on paras."     
-#sent= Sentiment()
-#arvot=sent.TunnistaSentiment(text_content,True)        
+text_content=r"Olen suomenkielistä kapulatekstiä. Hervannan keittiö on paras."     
+sent= Sentiment()
+arvot=sent.TunnistaSentiment(text_content,True)        
