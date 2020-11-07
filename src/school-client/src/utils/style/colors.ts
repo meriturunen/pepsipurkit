@@ -18,7 +18,8 @@ const Pallet: any = {
 }
 
 const Colors: any = {
-    primaryBackground : Pallet.almostProfitBlue100,
+    headderBackground : Pallet.almostProfitBlue100,
+    primaryBackground : Pallet.white,
     secondaryBackground : Pallet.almostProfitBlue30,
     primaryText : Pallet.black,
     secondaryText : Pallet.white,
