@@ -340,9 +340,9 @@ export default function EnhancedTable(props: TableFilter) {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell align="right">{row.organisaatio}</TableCell>
-                      <TableCell align="right">{row.projektinimi}</TableCell>
-                      <TableCell align="right">{row.projektityyppi}</TableCell>
+                      <TableCell align="left">{row.organisaatio}</TableCell>
+                      <TableCell align="left">{row.projektinimi}</TableCell>
+                      <TableCell align="left">{row.projektityyppi}</TableCell>
                       <TableCell align="right">{row.tuotoksienlkm}</TableCell>
                       <TableCell align="right">{row.onnistuminen.toFixed(2)}</TableCell>
                       <TableCell align="right">{row.projektinkoko.toFixed(0)}</TableCell>
