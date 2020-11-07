@@ -74,5 +74,6 @@ for i in range(0, len(ryhma)):
     
     
 #%%
-
-df2.to_csv('project_outcome_ryhmittely.csv')
+df3 = df2.reset_index(drop=False, inplace=False)
+df3 = df3.rename(columns={'index': 'unique'})
+df3.to_csv('project_outcome_ryhmittely.csv')
