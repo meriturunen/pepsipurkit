@@ -7,10 +7,14 @@ Created on Sat Nov  7 13:36:24 2020
 import pandas as pd
 import json
 import numpy as np
-
 #%%
-tuotokset = pd.read_csv('project_outcome.csv').dropna().reset_index()
-df = tuotokset[tuotokset.outcome_type != "0"].reset_index()
+tuotokset = pd.read_csv('project_outcome.csv')
+#%%
+df_sentiment=pd.read_csv('sentiments.csv')
+tuotokset=pd.concat([tuotokset,df_sentiment[['count','mean','std','min','max']].set_index(tuotokset.index)],axis=1)
+#%%
+tuotokset['outcome_type']=tuotokset['outcome_type'].fillna('0')
+df = tuotokset.reset_index()
 
 # toimintamalli
 # raportti
@@ -37,7 +41,7 @@ df.outcome_type.loc[(df.outcome_type == "materiaalit-julkaisut-www-sivu-tms")] =
 df.outcome_type.loc[(df.outcome_type == "julkaisu")] = "julkaisut"
 
 #%%
-ryhmitelty = df[['unique', 'outcome_type']]
+ryhmitelty = df[['unique', 'outcome_type','count','mean','std','min','max']]
 
 #%%
 ryhmitelty['summa'] = 1
@@ -50,7 +54,6 @@ ryhma.reset_index(drop=False, inplace=True)
 types = np.sort(ryhma['outcome_type'].unique())
 uniq = np.sort(ryhma['unique'].unique())
 df2 = pd.DataFrame(index=uniq)
-
 i = 0
 for i in range(0,len(types)):
     df2[types[i]] = ""
@@ -74,6 +77,15 @@ for i in range(0, len(ryhma)):
     
     
 #%%
+sentg=ryhmitelty.groupby(['unique'])
+sent_df=pd.DataFrame(index=sentg.first().index)
+sent_df.loc[:,'min']=sentg.min()['min']
+sent_df.loc[:,'max']=sentg.max()['max']
+sent_df.loc[:,'std']=sentg.mean()['std']
+sent_df.loc[:,'mean']=sentg.mean()['mean']
+df2.loc[:,['min','max','std','mean']]=sent_df[['min','max','std','mean']]
+
+#%%
 df3 = df2.reset_index(drop=False, inplace=False)
-df3 = df3.rename(columns={'index': 'unique'})
+df3 = df3.rename(columns={'index': 'unique','0':'ei-tuotos-tyyppia'})
 df3.to_csv('project_outcome_ryhmittely.csv')
