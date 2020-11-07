@@ -71,7 +71,7 @@ osa_alueet = [{3: '04 Ammatillinen koulutus'},
                       {4: '05 Korkeakoulu'},
                       {1: '02 Esi- ja perusopetus'},
                       {1: '02 Esi- ja perusopetus'},
-                      {5: '06 Järjestötoiminta',
+                      {5: '06 Järjestötoiminta'},
                       {1: '02 Esi- ja perusopetus'},
                       {2: '03 Toisen asteen koulutus'},
                       {2: '03 Toisen asteen koulutus'},
@@ -89,5 +89,8 @@ haku['osa_alueet'] = osa_alueet
 id_alue_df = haku[['id', 'osa_alueet']]
 
 #%%
+
+id_alue_df.to_csv("haku_alue_mappays.csv")
+
 
 morso = id_alue_df['osa_alueet'][0]
