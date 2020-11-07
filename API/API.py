@@ -51,7 +51,7 @@ def api_raaka():
     return jsonify(dat.to_dict('records'))
 	
 @cross_origin()
-@app.route('/api/v1/master', methods=['GET'])
+@app.route('/api/v1/isodonitsi', methods=['GET'])
 def api_donitsi1():
     dat=pd.read_csv('../master.csv')
     df=dat[['osa_alue_nimi','menotamount']]

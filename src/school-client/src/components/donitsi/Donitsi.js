@@ -3,6 +3,11 @@ import { PieChart, Pie, Sector, Cell } from 'recharts';
 
 const COLORS = ['#5fc82b','#8FD96B','#CFEFBF','#000a48','#4D547F','#B3B6C8','#0041db','#4D7AE6','#CCD9F8','#fe4545','#FE7D7D','#FFC7C7'];
 
+const formatter = new Intl.NumberFormat('fi-FI', {
+  style: 'currency',
+  currency: 'EUR',
+  minimumFractionDigits: 0
+})
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -26,7 +31,8 @@ const renderActiveShape = (props) => {
   } else {
     return (
       <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name} {payload.value}</text>
+        <text x={cx} y={cy} dy={5} textAnchor="middle" fill={'#000000'}>{payload.name}</text>
+        <text x={cx} y={cy} dy={30} textAnchor="middle" fill={'#000000'}>{formatter.format(payload.value)}</text>
         <Sector
           cx={cx}
           cy={cy}
@@ -56,8 +62,8 @@ const renderCustomizedLabel = (
   const textAnchor = cos >= 0 ? 'start' : 'end';
   return (
     <g>
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={'#000000'} fill="none" />
+      <circle cx={ex} cy={ey} r={2} fill={'#000000'} stroke="none" />
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{name}</text>
     </g>
   );
@@ -98,10 +104,11 @@ export default class Donitsi extends PureComponent {
           dataKey="value"
           onClick={this.onPieEnter}
           label={renderCustomizedLabel}
-        />
+        >
           {
             this.state.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           }
+        </Pie>
       </PieChart>)}
       </>
     );
@@ -109,7 +116,7 @@ export default class Donitsi extends PureComponent {
 
   componentDidMount(){
     this.setState({...this.state,isFetching:true})
-		fetch("http://localhost:5000/api/v1/master")
+		fetch("http://localhost:5000/api/v1/isodonitsi")
 		.then((response)=>{
 			return response.json();
 		})
