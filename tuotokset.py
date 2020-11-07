@@ -6,7 +6,16 @@ Created on Sat Nov  7 00:05:47 2020
 """
 
 import pandas as pd
+import json
+import regex as re
+from Translate import Kaantaja
+
+#%%
 alkuparsittu = pd.read_csv('alkuparsinta.csv')
+
+#%% 
+
+morso = Kaantaja()
 
 #%%
 def unique(list1): 
@@ -25,16 +34,16 @@ def unique(list1):
 
 
 #%%
-import json
-import regex as re
 
 outcome = alkuparsittu[['unique', 'project-outcomes']].dropna().reset_index()
 
 outcome_type = []
 
+projects = []
+
 k = 0 
 
-for k in range(0, len(outcome)):
+for k in range(0, len(outcome)):  
     
     print(k)
     load = outcome.loc[k, ['project-outcomes']].iloc[0]
@@ -47,7 +56,14 @@ for k in range(0, len(outcome)):
     i = 0
     koko = len(outcome_list)
     
+    uniq = outcome.loc[k, ['unique']].iloc[0]
+    
     for i in range(0, koko):
+        # dict with keys: unique, outcome_type, description_fi, description_en
+        project = {"unique": 0, "outcome_type": 0, "description_fi": 0, "description_en": 0}
+        
+        project["unique"] = uniq
+    
         outc_key = outcome_list[i].get("key")
         
         value_list = outcome_list[i].get("value")
@@ -60,11 +76,30 @@ for k in range(0, len(outcome)):
             
             if project_outcome == "outcome-type":
                 data = value_list[j].get("value")
-                
-                outcome_type.append(data)
-            
+                project["outcome_type"] = data
+  
             if project_outcome == "description":
                 data = value_list[j].get("value")
-            
+                
+                project["description_fi"] = data
+                project["description_en"] = morso.Kaanna(data)
+                
+        projects.append(project)
          
 outcome_type = unique(outcome_type)
+
+
+#%% 
+
+df = pd.DataFrame(projects)
+
+df.to_excel('project_outcome.xlsx')
+df.to_csv('project_outcome.csv')
+
+
+
+
+
+
+
+

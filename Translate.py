@@ -21,9 +21,9 @@ class Kaantaja():
     def Kaanna(self,teksti):
         result = self.translate_client.translate(teksti, target_language=self.target)
                 
-        print(u"Text: {}".format(result["input"]))
-        print(u"Translation: {}".format(result["translatedText"]))
-        print(u"Detected source language: {}".format(result["detectedSourceLanguage"]))
+     #   print(u"Text: {}".format(result["input"]))
+     #   print(u"Translation: {}".format(result["translatedText"]))
+     #   print(u"Detected source language: {}".format(result["detectedSourceLanguage"]))
        
         return result["translatedText"]
     
