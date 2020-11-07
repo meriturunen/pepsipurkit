@@ -11,6 +11,6 @@ import json
 alkuparsittu = pd.read_csv('alkuparsinta.csv')
 
 #%% 
-data = alkuparsittu[['unique','radioButton-good-practices']]
+data = alkuparsittu[['unique','radioButton-good-practices', 'organization_name', 'project_name']]
 
 data.to_csv("good_practices.csv")

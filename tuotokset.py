@@ -8,7 +8,7 @@ Created on Sat Nov  7 00:05:47 2020
 import pandas as pd
 import json
 import regex as re
-from Translate import Kaantaja
+from GCP.Translate import Kaantaja
 
 #%%
 alkuparsittu = pd.read_csv('alkuparsinta.csv')
