@@ -1,21 +1,40 @@
-import React from 'react'
-import clsx from 'clsx'
-import { makeStyles } from '@material-ui/core/styles'
+import React from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
 
-const Home : React.FC = () => {
-    const classes = useStyles()
+import SchoolSearchBar from "../../components/school-search-bar/SchoolSearchBar";
+import Donitsi from "../../components/donitsi/Donitsi";
 
-    return (
-        <div className={clsx('Home', classes.root)}>
-            <h3>Home page</h3>
-        </div>
-    )
-}
+const Home: React.FC = () => {
+  const classes = useStyles();
 
-const useStyles = makeStyles(theme => ({
-    root: {
-      display: 'flex',
-    },
-  }))
+  return (
+    <div className={clsx("Home", classes.root)}>
+      <table width="100%">
+        <tr>
+          <SchoolSearchBar />
+        </tr>
+        <tr>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Donitsi />
+          </div>
+        </tr>
+      </table>
+    </div>
+  );
+};
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    width: "100%",
+  },
+}));
 
 export default Home;

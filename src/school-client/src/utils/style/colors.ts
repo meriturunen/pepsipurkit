@@ -26,6 +26,9 @@ const Colors: any = {
     menuItemColor : Pallet.poisonGreen100,
     menuItemActivate : Pallet.white,
     menuHeadderBackground : Pallet.almostProfitBlue30,
+    successMessage : Pallet.grey,
+    errorMessage : Pallet.justRed100,
+    primaryButton : Pallet.almostProfitBlue100,
 };
 
 export default Colors;
