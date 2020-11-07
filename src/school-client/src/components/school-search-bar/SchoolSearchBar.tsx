@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     submitButton: {
       color: Colors.primaryButton,
+      minWidth:"200px"
     },
     successMessage: { color: Colors.successMessage },
     errorMessage: { color: Colors.errorMessage },
@@ -39,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
       maxWidth: "100%",
-      minWidth: 140
+      minWidth: "200px",
     },
     selectObject : {
-      minWidth: 140
+      minWidth: "200px"
     },
   })
 );

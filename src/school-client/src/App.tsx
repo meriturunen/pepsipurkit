@@ -45,6 +45,11 @@ const App: React.FC = () => {
       {!checked &&(
       <div className={classes.homeBlock}>
         <table width="100%">
+          {searchResults && (
+          <tr>
+          <Button onClick={()=>{setSearchResults(false);}}>{"<Takaisin"}</Button>
+          </tr>
+          )}
         <tr>
           <SchoolSearchBar clickHae={()=>{console.log("kliketi click"); setSearchResults(true);}}/>
         </tr>
@@ -54,12 +59,15 @@ const App: React.FC = () => {
           </tr>
         )}
          {searchResults && (
+          <>
           <tr>
           <Dashboard />
           </tr>
+          </>
         )}
         </table>
       </div>
+
       )}
     </div>
   );
