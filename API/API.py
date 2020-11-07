@@ -60,5 +60,12 @@ def api_donitsi1():
     df3=df21.rename(columns={'osa_alue_nimi': 'name', 'menotamount': 'value'})
     return jsonify(df3.to_dict('records'))
 
+@cross_origin()
+@app.route('/api/v1/alldata', methods=['GET'])
+def all_data():
+    data=pd.read_csv('../master.csv')
+    data=data.fillna("")
+    return jsonify(data.to_dict('records'))
+
 
 app.run()
