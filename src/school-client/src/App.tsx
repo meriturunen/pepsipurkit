@@ -29,7 +29,7 @@ const App: React.FC = () => {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-      <Fade in={checked}>
+      <Fade in={checked} timeout={1000}>
         <div className={classes.fadeOutBlock}>
           <img
             src={logo}
@@ -39,9 +39,11 @@ const App: React.FC = () => {
           />
         </div>
       </Fade>
+      {!checked &&(
       <div className={classes.homeBlock}>
         <Home />
       </div>
+      )}
     </div>
   );
 };
@@ -67,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
   fadeOutLogo: {
     display: "block",
     width: "50%",
+    maxWidth: "750px",
     marginLeft: "auto",
     marginRight: "auto",
   },
@@ -78,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1000,
   },
   homeBlock: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    maxWidth: "1000px",
     position: "relative",
   },
 }));
