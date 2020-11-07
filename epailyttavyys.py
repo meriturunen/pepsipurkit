@@ -10,18 +10,29 @@ df=pd.read_csv('master.csv')
 df.fillna(0, inplace=True)
 df=df.set_index('Unnamed: 0')
 
+df['radioButton-good-practices'].loc[(df['radioButton-good-practices'] == "ei")] = 0
+df['radioButton-good-practices'].fillna(0, inplace=True)
+df['radioButton-good-practices'].loc[(df['radioButton-good-practices'] == "kyllae")] = 1
+
 #%%
-total = df[['summaamount', 'osa_alue_nimi', 'sum', 'mean', 'haku_id']]
+total = df[['summaamount', 'osa_alue_nimi', 'sum', 'mean', 'haku_id', 'radioButton-good-practices']]
+
+total_ints = df[['summaamount', 'sum', 'mean']]
 
 # ,'toimintamalli', 'raportti', 'muu-tuotos', 'verkkosivut',
 #                                       'kasikirja', 'julkaisut', 'tutkimus', 'tapahtuma',
 #                                       'koulutus', 'opiskelijaliikkuvuudet-lkm', 'henkiloestoeliikkuvuudet-lkm',
 
-#%%
-total['haku_id'] = total['haku_id'].astype(str)
+total.fillna(0, inplace=True)
 
 #%%
-total['osa_alue_nimi'] = pd.get_dummies(df[['osa_alue_nimi']])
+total[['haku_id', 'radioButton-good-practices']] = total[['haku_id', 'radioButton-good-practices']].astype(str)
+
+#%%
+x = pd.get_dummies(total[['osa_alue_nimi', 'haku_id', 'radioButton-good-practices']])
+
+total = pd.concat([total_ints,x],axis=1)
+total.fillna(0, inplace=True)
 
 #%%
 # yhdistetty=df[df.columns[pd.Series(df.columns).str.contains('amount')]].fillna(0)
@@ -41,8 +52,7 @@ model=gmm.GaussianMixture(n_components=3)
 model.fit(X)
 total['poikkeavuus']=model.score_samples(X)
 
-#%% 
-
+#%%
 df['poikkeavuus'] = total['poikkeavuus']
 
 #%%
