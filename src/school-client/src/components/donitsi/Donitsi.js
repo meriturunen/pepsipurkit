@@ -1,37 +1,44 @@
 import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector } from 'recharts';
+import { PieChart, Pie, Sector, Cell } from 'recharts';
 
-const data = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 },
-  { name: 'Group D', value: 200 },
-];
+const COLORS = ['#5fc82b','#8FD96B','#CFEFBF','#000a48','#4D547F','#B3B6C8','#0041db','#4D7AE6','#CCD9F8','#fe4545','#FE7D7D','#FFC7C7'];
+
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const {
-    cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
+    cx, cy, innerRadius, outerRadius, startAngle, endAngle,
     fill, payload
   } = props;
-  const sin = Math.sin(-RADIAN * midAngle);
-  const cos = Math.cos(-RADIAN * midAngle);
+  if (payload.activeIndex === -1) {
+    var result = payload.data.reduce(function(tot, arr) { 
+      // return the sum with previous value
+      return tot + arr.value;
+    
+      // set initial value as 0
+    },0);
 
-
-  return (
-    <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name}</text>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-    </g>
-  );
+    return (
+      <g>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>Yhteensä {result}</text>
+      </g>
+    );
+  } else {
+    return (
+      <g>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name} {payload.value}</text>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+      </g>
+    );
+  }
 };
 
 const renderCustomizedLabel = (
@@ -57,6 +64,13 @@ const renderCustomizedLabel = (
 };
 
 export default class Donitsi extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFetching: false,
+      data: []
+    };
+  }
   state = {
     activeIndex: 0,
   };
@@ -70,21 +84,39 @@ export default class Donitsi extends PureComponent {
   render() {
 
     return (
-      <PieChart width={600} height={600}>
+      <>
+      {!this.state.isFetching &&(
+      <PieChart width={1000} height={600}>
         <Pie
           activeIndex={this.state.activeIndex}
           activeShape={renderActiveShape}
-          data={data}
-          cx={300}
+          data={this.state.data}
+          cx={500}
           cy={300}
           innerRadius={140}
           outerRadius={160}
-          fill="#8884d8"
           dataKey="value"
           onClick={this.onPieEnter}
           label={renderCustomizedLabel}
         />
-      </PieChart>
+          {
+            this.state.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+          }
+      </PieChart>)}
+      </>
     );
   }
+
+  componentDidMount(){
+    this.setState({...this.state,isFetching:true})
+		fetch("http://localhost:5000/api/v1/master")
+		.then((response)=>{
+			return response.json();
+		})
+		.then((data)=> {
+      console.log(data)
+      this.setState({data:data,isFetching:false})
+			}
+		);
+	}
 }

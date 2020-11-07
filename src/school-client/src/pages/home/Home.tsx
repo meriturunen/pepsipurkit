@@ -22,7 +22,7 @@ const Home: React.FC = () => {
               alignItems: "center",
             }}
           >
-            <SummaGraph />
+            <Donitsi />
           </div>
         </tr>
       </table>

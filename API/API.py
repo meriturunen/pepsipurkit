@@ -49,6 +49,16 @@ def api_summat_hist():
 def api_raaka():
     dat=pd.read_csv('../alkuparsinta.csv')
     return jsonify(dat.to_dict('records'))
+	
+@cross_origin()
+@app.route('/api/v1/master', methods=['GET'])
+def api_donitsi1():
+    dat=pd.read_csv('../master.csv')
+    df=dat[['osa_alue_nimi','menotamount']]
+    df2=df.groupby('osa_alue_nimi', as_index=False).sum()
+    df21 = df2[(df2 != 0).all(1)]
+    df3=df21.rename(columns={'osa_alue_nimi': 'name', 'menotamount': 'value'})
+    return jsonify(df3.to_dict('records'))
 
 
 app.run()
