@@ -10,5 +10,5 @@ import json
 #%%
 summat = pd.read_csv('summat.csv')
 practices = pd.read_csv('good_practices.csv')
-tuotokset = pd.read_csv('project_outcome.csv')
+tuotokset = pd.read_csv('project_outcome_ryhmittely.csv')
 
