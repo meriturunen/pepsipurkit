@@ -61,6 +61,16 @@ def api_donitsi1():
     return jsonify(df3.to_dict('records'))
 
 @cross_origin()
+@app.route('/api/v1/kpldonitsi', methods=['GET'])
+def api_donitsi2():
+    dat=pd.read_csv('../master.csv')
+    df=dat[['osa_alue_id']]
+    df2=df.groupby(['osa_alue_id']).size().reset_index(name='count')
+    df3=df2.rename(columns={'osa_alue_id': 'name', 'count': 'value'})
+    df3['name'] = 'Projektityyppi ' + df3['name'].astype(str)
+    return jsonify(df3.to_dict('records'))
+
+@cross_origin()
 @app.route('/api/v1/alldata', methods=['GET'])
 def all_data():
     data=pd.read_csv('../master.csv')
