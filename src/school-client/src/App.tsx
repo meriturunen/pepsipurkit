@@ -8,7 +8,7 @@ import Fade from "@material-ui/core/Fade";
 
 import Colors from "./utils/style/colors";
 import Home from "./pages/home/Home";
-import logo from "./utils/style/schoollogo_new.png";
+import logo from "./utils/style/schoollogo_new.afdesign_CAPS.svg";
 import SchoolSearchBar from "./components/school-search-bar/SchoolSearchBar";
 import Dashboard from "./pages/dashboard/Dashboard";
 
