@@ -9,33 +9,33 @@ import pandas as pd
 from flask import request, jsonify
 from flask_cors import CORS, cross_origin
 
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+application = flask.Flask(__name__)
+application.config["DEBUG"] = True
+cors = CORS(application)
+application.config['CORS_HEADERS'] = 'Content-Type'
 
 @cross_origin()
-@app.route('/', methods=['GET'])
+@application.route('/', methods=['GET'])
 def home():
     return "<h1>S.C.H.O.O.L. API</h1><p>Routes.</p>/api/v1/sentiments<p><p>/api/v1/summat</p><p>/api/v1/raaka</p>"
 
 # A route to return all of the available entries in our catalog.
 @cross_origin()
-@app.route('/api/v1/sentiments', methods=['GET'])
+@application.route('/api/v1/sentiments', methods=['GET'])
 def api_sentiments():
-    dat=pd.read_csv('../sentiments.csv')
+    dat=pd.read_csv('sentiments.csv')
     return jsonify(dat.to_dict('records'))
 
 @cross_origin()
-@app.route('/api/v1/summat', methods=['GET'])
+@application.route('/api/v1/summat', methods=['GET'])
 def api_summat():
-    dat=pd.read_csv('../summat.csv')
+    dat=pd.read_csv('summat.csv')
     return jsonify(dat.to_dict('records'))
 
 @cross_origin()
-@app.route('/api/v1/summat/hist', methods=['GET'])
+@application.route('/api/v1/summat/hist', methods=['GET'])
 def api_summat_hist():
-    dat=pd.read_csv('../summat.csv')
+    dat=pd.read_csv('summat.csv')
     cutted,bins=pd.cut(dat['summaamount'],5,labels=False,retbins=True)
     dat['bin']=cutted
     dat2=dat.groupby('bin')["summaamount"].agg(['sum','count'])
@@ -45,15 +45,15 @@ def api_summat_hist():
     return jsonify(dat2.to_dict('records'))
 
 @cross_origin()
-@app.route('/api/v1/raaka', methods=['GET'])
+@application.route('/api/v1/raaka', methods=['GET'])
 def api_raaka():
-    dat=pd.read_csv('../alkuparsinta.csv')
+    dat=pd.read_csv('alkuparsinta.csv')
     return jsonify(dat.to_dict('records'))
 	
 @cross_origin()
-@app.route('/api/v1/isodonitsi', methods=['GET'])
+@application.route('/api/v1/isodonitsi', methods=['GET'])
 def api_donitsi1():
-    dat=pd.read_csv('../master.csv')
+    dat=pd.read_csv('master.csv')
     df=dat[['osa_alue_nimi','menotamount']]
     df2=df.groupby('osa_alue_nimi', as_index=False).sum()
     df21 = df2[(df2 != 0).all(1)]
@@ -61,9 +61,9 @@ def api_donitsi1():
     return jsonify(df3.to_dict('records'))
 
 @cross_origin()
-@app.route('/api/v1/kpldonitsi', methods=['GET'])
+@application.route('/api/v1/kpldonitsi', methods=['GET'])
 def api_donitsi2():
-    dat=pd.read_csv('../master.csv')
+    dat=pd.read_csv('master.csv')
     df=dat[['osa_alue_id']]
     df2=df.groupby(['osa_alue_id']).size().reset_index(name='count')
     df3=df2.rename(columns={'osa_alue_id': 'name', 'count': 'value'})
@@ -71,9 +71,9 @@ def api_donitsi2():
     return jsonify(df3.to_dict('records'))
 
 @cross_origin()
-@app.route('/api/v1/tuotosdonitsi', methods=['GET'])
+@application.route('/api/v1/tuotosdonitsi', methods=['GET'])
 def api_donitsi3():
-    dat=pd.read_csv('../master.csv')
+    dat=pd.read_csv('master.csv')
     df=dat[['ei-tuotos-tyyppia','henkiloestoeliikkuvuudet-lkm','julkaisut','kasikirja',
             'koulutus','muu-tuotos','ohjelma','opiskelijaliikkuvuudet-lkm',
             'raportti','selvitys','tapahtuma','toimintamalli','tutkimus','verkkosivut']]
@@ -83,12 +83,12 @@ def api_donitsi3():
     return jsonify(df4.to_dict('records'))
 
 @cross_origin()
-@app.route('/api/v1/alldata', methods=['GET'])
+@application.route('/api/v1/alldata', methods=['GET'])
 def all_data():
-    data=pd.read_csv('../master.csv')
+    data=pd.read_csv('master.csv')
     data['mean']=data['mean'].fillna(0)
     data=data.fillna("")
     return jsonify(data.to_dict('records'))
 
 
-app.run()
+application.run()
