@@ -29,6 +29,7 @@ interface Data {
   projektinkoko: number;
   rahasumtodnak: number;
   tuotoksienlkm: number;
+  poikkeavuus: number;
 }
 
 
@@ -79,7 +80,7 @@ const headCells: HeadCell[] = [
   { id: 'tuotoksienlkm', numeric: false, disablePadding: false, label: 'Tuotoksia (kpl)' },
   { id: 'onnistuminen', numeric: true, disablePadding: false, label: 'Onnistuminen' },
   { id: 'projektinkoko', numeric: true, disablePadding: false, label: 'Projektinkoko' },
-  { id: 'rahasumtodnak', numeric: true, disablePadding: false, label: 'Poikkeavuus' },
+  { id: 'poikkeavuus', numeric: true, disablePadding: false, label: 'Poikkeavuus' },
 ];
 
 interface EnhancedTableProps {
@@ -242,7 +243,8 @@ export default function EnhancedTable(props: TableFilter) {
             onnistuminen:data[dat]["mean"],
             projektityyppi:data[dat]["osa_alue_nimi"],
             rahasumtodnak:data[dat]["SummienTodennakoisyys"],
-            tuotoksienlkm:data[dat]["sum"]
+            tuotoksienlkm:data[dat]["sum"],
+            poikkeavuus:data[dat]["poikkeavuus"]
             }as Data)
         }
         //console.log(newRows)
@@ -346,7 +348,7 @@ export default function EnhancedTable(props: TableFilter) {
                       <TableCell align="right">{row.tuotoksienlkm}</TableCell>
                       <TableCell align="right">{row.onnistuminen.toFixed(2)}</TableCell>
                       <TableCell align="right">{row.projektinkoko.toFixed(0)}</TableCell>
-                      <TableCell align="right">{row.rahasumtodnak.toFixed(0)}</TableCell>
+                      <TableCell align="right">{row.poikkeavuus.toFixed(0)}</TableCell>
                     </TableRow>
                   );
                 })}
