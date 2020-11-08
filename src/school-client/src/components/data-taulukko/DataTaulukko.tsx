@@ -228,7 +228,7 @@ export default function EnhancedTable(props: TableFilter) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   useEffect(() => {    
-    fetch("http://localhost:5000/api/v1/alldata")
+    fetch("http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/alldata")
     .then((response)=>{
         return response.json();
     })

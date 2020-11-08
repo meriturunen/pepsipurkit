@@ -12,7 +12,7 @@ from flask_cors import CORS, cross_origin
 application = flask.Flask(__name__)
 application.config["DEBUG"] = True
 cors = CORS(application)
-application.config['CORS_HEADERS'] = 'Content-Type'
+#application.config['CORS_HEADERS'] = 'Content-Type'
 
 @cross_origin()
 @application.route('/', methods=['GET'])
@@ -124,5 +124,6 @@ def all_data():
     data=data.fillna("")
     return jsonify(data.to_dict('records'))
 
-
-application.run()
+# run the app.
+if __name__ == "__main__":
+    application.run()

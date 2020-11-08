@@ -124,7 +124,7 @@ export default class Donitsi extends PureComponent {
 
   componentDidMount(){
     this.setState({...this.state,isFetching:true})
-		fetch("http://localhost:5000/api/v1/isodonitsi")
+		fetch("http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/isodonitsi")
 		.then((response)=>{
 			return response.json();
 		})

@@ -41,7 +41,7 @@ export default class Example extends Component
   }
   componentDidMount(){
     this.setState({...this.state,isFetching:true})
-		fetch("http://localhost:5000/api/v1/summat/hist")
+		fetch("http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/summat/hist")
 		.then((response)=>{
 			return response.json();
 		})

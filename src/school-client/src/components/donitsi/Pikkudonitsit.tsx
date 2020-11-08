@@ -22,10 +22,10 @@ const PienetDonitsit: React.FC = () => {
             }}
           >
             <PikkudonitsiTuotos
-              url="http://localhost:5000/api/v1/tuotosdonitsi"
+              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/tuotosdonitsi"
             />
             <PikkudonitsiKpl
-              url="http://localhost:5000/api/v1/kpldonitsi"
+              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/kpldonitsi"
             />
           </div>
         </tr>
@@ -38,10 +38,10 @@ const PienetDonitsit: React.FC = () => {
             }}
           >
             <PikkudonitsiRaha
-              url="http://localhost:5000/api/v1/rahadonitsi"
+              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/rahadonitsi"
             />
             <PikkudonitsiTodari
-              url="http://localhost:5000/api/v1/onnistunutdonitsi"
+              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/onnistunutdonitsi"
             />
           </div>
         </tr>

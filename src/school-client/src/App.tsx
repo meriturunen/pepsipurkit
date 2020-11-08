@@ -51,7 +51,7 @@ const App: React.FC = () => {
           </tr>
           )}
         <tr>
-          <SchoolSearchBar clickHae={()=>{console.log("kliketi click"); setSearchResults(true);}}/>
+          <SchoolSearchBar clickHae={()=>{setSearchResults(true);}}/>
         </tr>
         {!searchResults && (
           <tr>
