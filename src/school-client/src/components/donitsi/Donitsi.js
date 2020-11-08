@@ -37,7 +37,7 @@ const renderActiveShape = (props) => {
           cx={cx}
           cy={cy}
           innerRadius={innerRadius}
-          outerRadius={outerRadius}
+          outerRadius={outerRadius + 8}
           startAngle={startAngle}
           endAngle={endAngle}
           fill={fill}
@@ -85,7 +85,14 @@ export default class Donitsi extends PureComponent {
     this.setState({
       activeIndex: index,
     });
+  };
+
+  onPieLeave = (data, index) => {
+    this.setState({
+      activeIndex: 999,
+    });
   };  
+
 
   render() {
 
@@ -103,6 +110,7 @@ export default class Donitsi extends PureComponent {
           outerRadius={160}
           dataKey="value"
           onMouseEnter={this.onPieEnter}
+          onMouseLeave={this.onPieLeave}
           label={renderCustomizedLabel}
         >
           {

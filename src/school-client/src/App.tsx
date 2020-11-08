@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
   homeBlock: {
     marginLeft: "auto",
     marginRight: "auto",
-    maxWidth: "1000px",
+    maxWidth: "100%",
     position: "relative",
   },
 }));

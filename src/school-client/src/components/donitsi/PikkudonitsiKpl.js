@@ -23,7 +23,7 @@ const renderActiveShape = (props) => {
             cx={cx}
             cy={cy}
             innerRadius={innerRadius}
-            outerRadius={outerRadius}
+            outerRadius={outerRadius + 8}
             startAngle={startAngle}
             endAngle={endAngle}
             fill={fill}
@@ -73,6 +73,12 @@ export default class PikkudonitsiKpl extends PureComponent {
     });
   };  
 
+  onPieLeave = (data, index) => {
+    this.setState({
+      activeIndex: 999,
+    });
+  };  
+
   render() {
 
     return (
@@ -89,6 +95,7 @@ export default class PikkudonitsiKpl extends PureComponent {
           outerRadius={110}
           dataKey="value"
           onMouseEnter={this.onPieEnter}
+          onMouseLeave={this.onPieLeave}
           label={renderCustomizedLabel}
         >
           {

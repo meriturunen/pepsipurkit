@@ -11,7 +11,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={clsx("Home", classes.root)}>
-      <table width="100vh">
+      <table width="100%">
         <tr>
           <div
             style={{
