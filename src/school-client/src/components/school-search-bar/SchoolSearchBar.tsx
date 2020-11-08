@@ -163,9 +163,14 @@ const SchoolSearchBar: React.FC<SearchInterface> = (searchProps: SearchInterface
                   <MenuItem value="">
                     <em>Kaikki</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={1}>01 Varhaiskasvatus</MenuItem>
+                  <MenuItem value={2}>02 Esi-ja perusopetus</MenuItem>
+                  <MenuItem value={3}>03 Toisen asteen koulutus</MenuItem>
+                  <MenuItem value={4}>04 Ammatillinen koulutus</MenuItem>
+                  <MenuItem value={5}>05 Korkeakoulu</MenuItem>
+                  <MenuItem value={6}>06 Järjestötoiminta</MenuItem>
+                  <MenuItem value={7}>07 Vapaa sivistystyö</MenuItem>
+                  <MenuItem value={8}>08 Muut</MenuItem>
                 </Select>
                 </div>
                 <div className={classes.formObject}>
@@ -183,9 +188,9 @@ const SchoolSearchBar: React.FC<SearchInterface> = (searchProps: SearchInterface
                   <MenuItem value="">
                     <em>Kaikki</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>Välttävä</MenuItem>
+                  <MenuItem value={20}>Neutraali</MenuItem>
+                  <MenuItem value={30}>Hyvä</MenuItem>
                 </Select>
                 </div>
                 <div>
