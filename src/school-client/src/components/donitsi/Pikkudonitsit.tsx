@@ -6,6 +6,7 @@ import PikkudonitsiKpl from "./PikkudonitsiKpl";
 import PikkudonitsiTuotos from "./PikkudonitsiTuotos";
 import PikkudonitsiRaha from "./PikkudonitsiRaha";
 import PikkudonitsiTodari from "./PikkudonitsiTodari";
+import { Typography } from "@material-ui/core";
 
 const PienetDonitsit: React.FC = () => {
   const classes = useStyles();
@@ -21,12 +22,14 @@ const PienetDonitsit: React.FC = () => {
               alignItems: "center",
             }}
           >
-            <PikkudonitsiTuotos
-              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/tuotosdonitsi"
-            />
-            <PikkudonitsiKpl
-              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/kpldonitsi"
-            />
+            <div style={{textAlign:'center'}}>
+              <Typography variant={"h5"}>Onnistuminen</Typography>
+              <PikkudonitsiTodari url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/onnistunutdonitsi" />
+            </div>
+            <div style={{textAlign:'center'}}>
+              <Typography variant={"h5"}>Projektityypit</Typography>
+              <PikkudonitsiKpl url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/kpldonitsi" />
+            </div>
           </div>
         </tr>
         <tr>
@@ -37,12 +40,14 @@ const PienetDonitsit: React.FC = () => {
               alignItems: "center",
             }}
           >
-            <PikkudonitsiRaha
-              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/rahadonitsi"
-            />
-            <PikkudonitsiTodari
-              url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/onnistunutdonitsi"
-            />
+            <div style={{textAlign:'center'}}>
+              <Typography variant={"h5"}>Tuotostyypit</Typography>
+              <PikkudonitsiTuotos url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/rahadonitsi" />
+            </div>
+            <div style={{textAlign:'center'}}>
+              <Typography variant={"h5"}>Projektin koko</Typography>
+              <PikkudonitsiRaha url="http://school3-env.eba-jw2s8y5v.eu-north-1.elasticbeanstalk.com/api/v1/rahadonitsi" />
+            </div>
           </div>
         </tr>
       </table>
@@ -51,10 +56,10 @@ const PienetDonitsit: React.FC = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex",
-      width: "100%",
-    },
-  }));
+  root: {
+    display: "flex",
+    width: "100%",
+  },
+}));
 
 export default PienetDonitsit;

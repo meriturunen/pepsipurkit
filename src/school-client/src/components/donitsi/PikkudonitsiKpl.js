@@ -3,6 +3,8 @@ import { PieChart, Pie, Sector, Cell } from 'recharts';
 
 const COLORS = ['#5fc82b','#8FD96B','#CFEFBF','#000a48','#4D547F','#B3B6C8','#0041db','#4D7AE6','#CCD9F8','#fe4545','#FE7D7D','#FFC7C7'];
 
+const superDataa = {name: 'Group A', value: 400}
+
 const formatter = new Intl.NumberFormat('fi-FI', {
   style: 'currency',
   currency: 'EUR',
@@ -55,6 +57,21 @@ const renderCustomizedLabel = (
   );
 };
 
+const renderTotal = (props)=> {
+  const { cx, cy, textAnchor, state } = props;
+  var result = state.data.reduce(function(tot, arr) { 
+    // return the sum with previous value
+    return tot + arr.value;
+  
+    // set initial value as 0
+  },0);
+  return (
+    <g>
+      <text x={cx} y={cy} textAnchor={textAnchor} fill="#000">{result}</text>
+    </g>
+  );
+};
+
 export default class PikkudonitsiKpl extends PureComponent {
   constructor(props) {
     super(props);
@@ -102,7 +119,18 @@ export default class PikkudonitsiKpl extends PureComponent {
             this.state.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           }
         </Pie>
-      </PieChart>)}
+        <Pie
+          innerRadius={0}
+          outerRadius={100}
+          cx={300}
+          cy={150}
+          data={superDataa}
+          label={renderTotal}
+          fill='#00000'
+        >
+        </Pie>
+      </PieChart>
+      )}
       </>
     );
   }
