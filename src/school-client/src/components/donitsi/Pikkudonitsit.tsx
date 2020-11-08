@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import PikkudonitsiKpl from "./PikkudonitsiKpl";
 import PikkudonitsiTuotos from "./PikkudonitsiTuotos";
+import PikkudonitsiRaha from "./PikkudonitsiRaha";
+import PikkudonitsiTodari from "./PikkudonitsiTodari";
 
 const PienetDonitsit: React.FC = () => {
   const classes = useStyles();
@@ -35,18 +37,12 @@ const PienetDonitsit: React.FC = () => {
               alignItems: "center",
             }}
           >
-            {/* <Pikkudonitsi
-              url="http://localhost:5000/api/v1/isodonitsi"
-              isCurrency="false"
-              isValueMark="true"
-              valueMark="kpl"
+            <PikkudonitsiRaha
+              url="http://localhost:5000/api/v1/rahadonitsi"
             />
-            <Pikkudonitsi
-              url="http://localhost:5000/api/v1/isodonitsi"
-              isCurrency="false"
-              isValueMark="true"
-              valueMark="kpl"
-            /> */}
+            <PikkudonitsiTodari
+              url="http://localhost:5000/api/v1/onnistunutdonitsi"
+            />
           </div>
         </tr>
       </table>

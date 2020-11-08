@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { PieChart, Pie, Sector, Cell } from 'recharts';
 
-const COLORS = ['#5fc82b','#8FD96B','#CFEFBF','#000a48','#4D547F','#B3B6C8','#0041db','#4D7AE6','#CCD9F8','#fe4545','#FE7D7D','#FFC7C7'];
+const COLORS = ['#fe4545','#8FD96B','#5fc82b','#000a48','#4D547F','#B3B6C8',,'#FFC7C7'];
 
 const formatter = new Intl.NumberFormat('fi-FI', {
   style: 'currency',
@@ -13,20 +13,12 @@ const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;
     const {
         cx, cy, innerRadius, outerRadius, startAngle, endAngle,
-        fill, payload, isCurrency, isValueMark, valueMark
+        fill, payload
     } = props;
-    var bigValue = 'ASDASDA';
-    if (isCurrency === 'true') {
-        bigValue = formatter.format(payload.value).toString;
-    } else if (isValueMark === 'true') {
-        bigValue = bigValue.concat(payload.value, ' ', valueMark);
-    } else {
-        bigValue = payload.value.toString;
-    }
     return (
         <g>
         <text x={cx} y={cy} dy={5} textAnchor="middle" fill={'#000000'}>{payload.name}</text>
-        <text x={cx} y={cy} dy={30} textAnchor="middle" fill={'#000000'}>{bigValue}</text>
+        <text x={cx} y={cy} dy={30} textAnchor="middle" fill={'#000000'}>{parseFloat(payload.value).toFixed(2)+" %"}</text>
         <Sector
             cx={cx}
             cy={cy}
@@ -63,7 +55,7 @@ const renderCustomizedLabel = (
   );
 };
 
-export default class Pikkudonitsi extends PureComponent {
+export default class PikkudonitsiTodari extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

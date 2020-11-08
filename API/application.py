@@ -74,13 +74,47 @@ def api_donitsi2():
 @application.route('/api/v1/tuotosdonitsi', methods=['GET'])
 def api_donitsi3():
     dat=pd.read_csv('master.csv')
-    df=dat[['ei-tuotos-tyyppia','henkiloestoeliikkuvuudet-lkm','julkaisut','kasikirja',
-            'koulutus','muu-tuotos','ohjelma','opiskelijaliikkuvuudet-lkm',
-            'raportti','selvitys','tapahtuma','toimintamalli','tutkimus','verkkosivut']]
+    df=dat[['ei-tuotos-tyyppia','julkaisut',
+            'koulutus','muu-tuotos',
+            'raportti','tapahtuma','toimintamalli','tutkimus','verkkosivut']]
     df2=df.sum(axis=0).T
     df3=df2.reset_index(level=0, inplace=False)
     df4=df3.rename(columns={'index': 'name', 0: 'value'})
     return jsonify(df4.to_dict('records'))
+
+@cross_origin()
+@application.route('/api/v1/rahadonitsi', methods=['GET'])
+def api_donitsi4():
+    res = pd.DataFrame(columns=['name', 'value'])
+    dat=pd.read_csv('master.csv')
+    df=dat[['menotamount']]
+    df2 = df.query('0 <= menotamount < 20000')
+    df3 = df.query('20001 <= menotamount < 50000')
+    df4 = df.query('50001 <= menotamount < 200000')
+    df5 = df.query('200001 <= menotamount < 500000')
+    df6 = df.query('500001 <= menotamount')
+    dff = res.append({'name': '0 - 20 000 €', 'value':df2['menotamount'].count()}, ignore_index=True)
+    dff = dff.append({'name': '20 001 - 50 000 €', 'value':df3['menotamount'].count()}, ignore_index=True)
+    dff = dff.append({'name': '50 001 - 200 000 €', 'value':df4['menotamount'].count()}, ignore_index=True)
+    dff = dff.append({'name': '200 001 - 500 000 €', 'value':df5['menotamount'].count()}, ignore_index=True)
+    dff = dff.append({'name': '500 000- €', 'value':df6['menotamount'].count()}, ignore_index=True)
+    return jsonify(dff.to_dict('records'))
+
+@cross_origin()
+@application.route('/api/v1/onnistunutdonitsi', methods=['GET'])
+def api_donitsi5():
+    res = pd.DataFrame(columns=['name', 'value'])
+    dat=pd.read_csv('master.csv')
+    df=dat[['mean']].fillna(0)
+    df2 = df.query('-1 <= mean <= 0')
+    df3 = df.query('0 < mean <= 0.5')
+    df4 = df.query('0.5 < mean <= 1')
+    total = df2['mean'].count() + df3['mean'].count() + df4['mean'].count()
+    dff = res.append({'name': 'Huono onnistuminen', 'value':(df2['mean'].count() / total) * 100}, ignore_index=True)
+    dff = dff.append({'name': 'Ok onnistuminen', 'value':(df3['mean'].count() / total) * 100}, ignore_index=True)
+    dff = dff.append({'name': 'Hyvä onnistuminen', 'value':(df4['mean'].count() / total) * 100}, ignore_index=True)
+    return jsonify(dff.to_dict('records'))
+
 
 @cross_origin()
 @application.route('/api/v1/alldata', methods=['GET'])
