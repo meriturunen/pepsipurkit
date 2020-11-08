@@ -71,6 +71,18 @@ def api_donitsi2():
     return jsonify(df3.to_dict('records'))
 
 @cross_origin()
+@app.route('/api/v1/tuotosdonitsi', methods=['GET'])
+def api_donitsi3():
+    dat=pd.read_csv('../master.csv')
+    df=dat[['ei-tuotos-tyyppia','henkiloestoeliikkuvuudet-lkm','julkaisut','kasikirja',
+            'koulutus','muu-tuotos','ohjelma','opiskelijaliikkuvuudet-lkm',
+            'raportti','selvitys','tapahtuma','toimintamalli','tutkimus','verkkosivut']]
+    df2=df.sum(axis=0).T
+    df3=df2.reset_index(level=0, inplace=False)
+    df4=df3.rename(columns={'index': 'name', 0: 'value'})
+    return jsonify(df4.to_dict('records'))
+
+@cross_origin()
 @app.route('/api/v1/alldata', methods=['GET'])
 def all_data():
     data=pd.read_csv('../master.csv')
