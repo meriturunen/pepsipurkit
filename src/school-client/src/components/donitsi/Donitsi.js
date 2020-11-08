@@ -102,7 +102,7 @@ export default class Donitsi extends PureComponent {
           innerRadius={140}
           outerRadius={160}
           dataKey="value"
-          onClick={this.onPieEnter}
+          onMouseEnter={this.onPieEnter}
           label={renderCustomizedLabel}
         >
           {

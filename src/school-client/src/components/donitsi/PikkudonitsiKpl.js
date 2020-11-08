@@ -88,7 +88,7 @@ export default class PikkudonitsiKpl extends PureComponent {
           innerRadius={100}
           outerRadius={110}
           dataKey="value"
-          onClick={this.onPieEnter}
+          onMouseEnter={this.onPieEnter}
           label={renderCustomizedLabel}
         >
           {
